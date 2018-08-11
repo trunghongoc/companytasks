@@ -1,0 +1,27 @@
+ul.popover-item-t {
+    margin: 0;
+    padding: 0;
+    hr {
+        margin: 0;
+    }
+    li {
+        padding: 6px 0;
+        list-style-type: none;
+        border-bottom: 1px dotted transparent;
+        a,
+        span {
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+            i {
+                margin-right: 5px;
+            }
+        }
+        &:hover {
+            border-bottom: 1px dotted $base-color;
+            a {
+                color: $text-base-color;
+            }
+        }
+    }
+}

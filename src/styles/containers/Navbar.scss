@@ -1,0 +1,65 @@
+.navbar-t {
+    width: 100%;
+    background: $base-color;
+    color: #fff;
+    .wrap {
+        padding: 9px 15px;
+        i {
+            color: #fff;
+        }
+        .logo {
+            img {
+                width: 32px;
+            }
+        }
+        .btn-left,
+        .btn-right {
+            button:not(:last-child) {
+                margin-right: 5px;
+            }
+        }
+        .ant-badge .ant-badge-dot {
+            -webkit-box-shadow: none!important;
+            box-shadow: none!important;
+            height: 8px;
+            width: 8px;
+            top: -4px;
+            right: -11px;
+        }
+    }
+
+    .fixed-menu-mobile {
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 15px;
+        background: $base-color;
+        text-align: center;
+        height: 0;
+        transition: all 0.9s;
+        .display-menu-mobile-t {
+            display: none;
+            i {
+                color: #fff;
+            }
+        }
+        button:not(:last-child) {
+            margin-right: 6px;
+        }
+        &.active-mobile-t {
+            padding: 9px 15px;
+            height: auto;
+            .display-menu-mobile-t {
+                display: block;
+            }
+        }
+        .right-menu-mobile {
+            width: 32px;
+        }
+        .left-menu-mobile {
+            width: calc(100% - 32px);
+        }
+    }
+}

@@ -1,5 +1,24 @@
-$green-color: green;
+$base-color: #34495e;
+$text-base-color: rgba(0, 0, 0, 0.9);
+$gray-light: #ecf0f1;
+$gray-light-p50: rgba(236, 240, 241, 0.5);
 
-div {
-    background: $green-color;
+@import "~roboto-fontface/css/roboto/roboto-fontface.css";
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~antd/dist/antd.css';
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: $text-base-color;
 }
+a {
+    color: $text-base-color;
+}
+
+@import './Reset.scss';
+
+@import './components/Popover.scss';
+
+@import './containers/Navbar.scss';
+@import './containers/MainLeft.scss';
+@import './containers/MainRight.scss';

@@ -1,0 +1,23 @@
+.hide-div {
+    display: none;
+}
+.mr-t-7 {
+    width: 100%;
+    margin-top: 7px;
+}
+
+.pd-r-5 {
+    padding-right: 5px;
+}
+.pd-l-5 {
+    padding-left: 5px;
+}
+
+@media all and (max-width: 768px) {
+    .pd-r-15-sm {
+        padding-right: 15px;
+    }
+    .pd-l-15-sm {
+        padding-left: 15px;
+    }
+}
