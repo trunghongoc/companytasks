@@ -13,15 +13,36 @@ const initData = {
     columns: {
         'column1': {
             id: 'column1',
-            title: 'Cột số một',
-            taskIds: ['task1', 'task3', 'task2', 'task4', 'task5']
+            title: 'Cột số một 1',
+            taskIds: ['task1', 'task3', 'task2', 'task5']
+        },
+        'column2': {
+            id: 'column2',
+            title: 'Cột số hai 2',
+            taskIds: ['task4']
+        },
+        'column3': {
+            id: 'column3',
+            title: 'Cột số ba 3',
+            taskIds: []
         }
     },
-    columnOrder: ['column1']
+    columnOrder: ['column1', 'column2', 'column3']
 }
 
 class Main extends Component {
     state = initData
+
+    onDragStart = () => {
+    }
+
+    onDragUpdate = update => {
+        // const { destination } = update
+        // const opacity = destination
+        //     ? destination.index / Object.keys(this.state.tasks).length
+        //     : 0
+        
+    }
 
     onDragEnd = result => {
         const { destination, source, draggableId } = result
@@ -31,24 +52,53 @@ class Main extends Component {
         ) { return }
 
         // reoder column.taskIds
-        const column = this.state.columns[source.droppableId]
-        const newTaskIds = Array.from(column.taskIds)
-        newTaskIds.splice(source.index, 1)
-        newTaskIds.splice(destination.index, 0, draggableId)
-
-        const newColumn = {
-            ...column,
-            taskIds: newTaskIds
-        }
-
-        const newState = {
-            ...this.state,
-            columns: {
-                ...this.state.columns,
-                [newColumn.id]: newColumn
+        const startColumn = this.state.columns[source.droppableId]
+        const finishColumn = this.state.columns[destination.droppableId]
+        if (startColumn === finishColumn) {
+            let column = startColumn
+            const newTaskIds = Array.from(column.taskIds)
+            newTaskIds.splice(source.index, 1)
+            newTaskIds.splice(destination.index, 0, draggableId)
+    
+            const newColumn = {
+                ...column,
+                taskIds: newTaskIds
             }
+    
+            const newState = {
+                ...this.state,
+                columns: {
+                    ...this.state.columns,
+                    [newColumn.id]: newColumn
+                }
+            }
+            this.setState(newState)
+        } else {
+            // Moving from one list another
+            const startTaskIds = Array.from(startColumn.taskIds)
+            startTaskIds.splice(source.index, 1)
+            const newStart = {
+                ...startColumn,
+                taskIds: startTaskIds
+            }
+
+            const finishTaskIds = Array.from(finishColumn.taskIds)
+            finishTaskIds.splice(destination.index, 0, draggableId)
+            const newFinish = {
+                ...finishColumn,
+                taskIds: finishTaskIds
+            }
+
+            const newState = {
+                ...this.state,
+                columns: {
+                    ...this.state.columns,
+                    [newStart.id]: newStart,
+                    [newFinish.id]: newFinish
+                }
+            }
+            this.setState(newState)
         }
-        this.setState(newState)
     }
 
     render() {
@@ -56,8 +106,11 @@ class Main extends Component {
         return(
             <div className="row">
                 <div className="mr-t-7"></div>
-                <div className="col">
-                    <DragDropContext onDragEnd={this.onDragEnd}>
+                <DragDropContext
+                    onDragStart={this.onDragStart}
+                    onDragUpdate={this.onDragUpdate}
+                    onDragEnd={this.onDragEnd}
+                >
                     {
                         columnOrder.map(columnId => {
                             const column = columns[columnId]
@@ -65,8 +118,7 @@ class Main extends Component {
                             return <CardColumn key={column.id} column={column} tasks={_tasks} />
                         })
                     }
-                    </DragDropContext>
-                </div>
+                </DragDropContext>
             </div>
         )
     }

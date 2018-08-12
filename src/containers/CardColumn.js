@@ -14,21 +14,23 @@ class CardColumn extends Component {
     render() {
         let { column, tasks } = this.props
         return(
-            <div className="card-column">
-                <div className="card-column-title">{column.title}</div>
-                <Droppable droppableId={column.id}>
-                    {(provided, snapshot) => (
-                        <div
-                            ref={provided.innerRef}
-                            className={this.isDraggingClass(snapshot.isDraggingOver)}
-                        >
-                            {tasks.map((task, index) => (
-                                <TaskColumn key={task.id} task={task} index={index} />
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
+            <div className="col col-md-4">
+                <div className="card-column">
+                    <div className="card-column-title">{column.title}</div>
+                    <Droppable droppableId={column.id}>
+                        {(provided, snapshot) => (
+                            <div
+                                ref={provided.innerRef}
+                                className={this.isDraggingClass(snapshot.isDraggingOver)}
+                            >
+                                {tasks.map((task, index) => (
+                                    <TaskColumn key={task.id} task={task} index={index} />
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </div>
             </div>
         )
     }

@@ -1,6 +1,6 @@
 .card-column {
     width: 100%;
-    min-height: 300px;
+    min-height: 360px;
     border: 1px solid #000;
     padding: 10px;
     .card-column-title {
@@ -16,7 +16,7 @@
     .card-column-task-list {
         background: #ddd;
         width: 100%;
-        min-height: 220px;
+        min-height: 260px;
         padding-top: 5px;
         &.task-is-draggingOver-on-board {
             background: chocolate;
