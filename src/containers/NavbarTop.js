@@ -171,7 +171,9 @@ class NavbarTop extends Component {
                             <Button type="primary" shape="circle" icon="message" />
                         </div>
                         <div className="col col-md-2 text-center logo d-none d-md-block">
-                            <img src="./../images/logo.png" alt=""/>
+                            <Link to="/">
+                                <img src="./../images/logo.png" alt=""/>
+                            </Link>
                         </div>
                         <div className="col col-sm-3 col-md-5 align-self-end">
                             <div className="text-right btn-right">
