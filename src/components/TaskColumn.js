@@ -14,7 +14,12 @@ class TaskColumn extends Component {
     render() {
         let { task, index } = this.props
         return(
-            <Draggable key={task.id} draggableId={task.id} index={index}>
+            <Draggable
+                key={task.id}
+                draggableId={task.id}
+                index={index}
+                isDragDisabled={false}
+            >
                 {(provided, snapshot) => (
                     <div
                         ref={provided.innerRef}

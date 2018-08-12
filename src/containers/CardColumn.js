@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Droppable } from 'react-beautiful-dnd'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 import TaskColumn from './../components/TaskColumn'
 
 class CardColumn extends Component {
@@ -12,12 +12,26 @@ class CardColumn extends Component {
     }
 
     render() {
-        let { column, tasks } = this.props
+        let { column, tasks, index } = this.props
         return(
-            <div className="col col-md-4">
-                <div className="card-column">
+            <Draggable
+                draggableId={column.id}
+                index={index}
+            >
+            {(provided) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                >
+                    <div className="card-column">
                     <div className="card-column-title">{column.title}</div>
-                    <Droppable droppableId={column.id}>
+                    <Droppable
+                        droppableId={column.id}
+                        isDropDisabled={false}
+                        direction="vertical"
+                        type="task"
+                    >
                         {(provided, snapshot) => (
                             <div
                                 ref={provided.innerRef}
@@ -31,7 +45,9 @@ class CardColumn extends Component {
                         )}
                     </Droppable>
                 </div>
-            </div>
+                </div>
+            )}
+            </Draggable>
         )
     }
 }

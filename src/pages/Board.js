@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import CardColumn from './../containers/CardColumn'
 
 const initData = {
@@ -45,11 +45,24 @@ class Main extends Component {
     }
 
     onDragEnd = result => {
-        const { destination, source, draggableId } = result
+        const { destination, source, draggableId, type } = result
         if (
             !destination ||
             (destination.droppableId === source.droppableId && destination.index === source.index)
         ) { return }
+
+        if (type === 'column') {
+            const newColumnOrder = Array.from(this.state.columnOrder)
+            newColumnOrder.splice(source.index, 1)
+            newColumnOrder.splice(destination.index, 0, draggableId)
+
+            const newState = {
+                ...this.state,
+                columnOrder: newColumnOrder
+            }
+            this.setState(newState)
+            return
+        }
 
         // reoder column.taskIds
         const startColumn = this.state.columns[source.droppableId]
@@ -111,13 +124,32 @@ class Main extends Component {
                     onDragUpdate={this.onDragUpdate}
                     onDragEnd={this.onDragEnd}
                 >
-                    {
-                        columnOrder.map(columnId => {
-                            const column = columns[columnId]
-                            const _tasks = column.taskIds.map(taskId => tasks[taskId])
-                            return <CardColumn key={column.id} column={column} tasks={_tasks} />
-                        })
-                    }
+                    <Droppable
+                        droppableId="all-column"
+                        direction="horizontal"
+                        type="column"
+                    >
+                        {(provided) => (
+                            <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                className="full-width"
+                            >
+                                {
+                                    columnOrder.map((columnId, index) => {
+                                        const column = columns[columnId]
+                                        const _tasks = column.taskIds.map(taskId => tasks[taskId])
+                                        return (
+                                            <div key={column.id} className="col col-md-4 float-left">
+                                                <CardColumn column={column} tasks={_tasks} index={index} />
+                                            </div>
+                                        )
+                                    })
+                                }
+                                <div className="clearfix"></div>
+                            </div>
+                        )}
+                    </Droppable>
                 </DragDropContext>
             </div>
         )
