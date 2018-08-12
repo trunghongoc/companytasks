@@ -1,20 +1,41 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { Button, Avatar } from 'antd'
+import { connect } from 'react-redux'
 import CardColumn from './../containers/CardColumn'
+
+function mapStateToProps(state: Object): Object {
+    return {
+      windowSize: state.windowSize
+    }
+}
+
+function mapDispatchToProps(dispatch: Function): Object {
+  return {
+  }
+}
 
 const initData = {
     tasks: {
-        task1: {id: 'task1', content: '1. navigate to Theme Admin'},
-        task2: {id: 'task2', content: '2. select option Import Demo Content'},
-        task3: {id: 'task3', content: '3. click on the button'},
-        task4: {id: 'task4', content: '4. after click on button'},
-        task5: {id: 'task5', content: '5. demo content will be automatically uploaded'}
+        task1: {id: 'task1', content: '1. navigate to Theme Admin', users: [
+            {id: 1, name: 'Hồ Ngọc Trung', short: 'T', userName: 'trunghongoc'}
+        ]},
+        task2: {id: 'task2', content: '2. select option Import Demo Content', users: []},
+        task3: {id: 'task3', content: '3. click on the button', users: []},
+        task4: {id: 'task4', content: '4. after click on button', users: []},
+        task5: {id: 'task5', content: '5. demo content will be automatically uploaded', users: []},
+        task6: {id: 'task6', content: '6. navigate to Theme Admin', users: []},
+        task7: {id: 'task7', content: '7. select option Import Demo Content', users: []},
+        task8: {id: 'task8', content: '8. click on the button', users: []},
+        task9: {id: 'task9', content: '9. after click on button', users: []},
+        task10: {id: 'task10', content: '10. demo content will be automatically uploaded', users: []}
     },
     columns: {
         'column1': {
             id: 'column1',
             title: 'Cột số một 1',
-            taskIds: ['task1', 'task3', 'task2', 'task5']
+            taskIds: ['task1', 'task3', 'task2', 'task5', 'task6', 'task7', 'task8', 'task9', 'task10']
         },
         'column2': {
             id: 'column2',
@@ -25,12 +46,22 @@ const initData = {
             id: 'column3',
             title: 'Cột số ba 3',
             taskIds: []
+        },
+        'column4': {
+            id: 'column4',
+            title: 'Cột số bốn 4',
+            taskIds: []
+        },
+        'column5': {
+            id: 'column5',
+            title: 'Cột số năm 5',
+            taskIds: []
         }
     },
-    columnOrder: ['column1', 'column2', 'column3']
+    columnOrder: ['column1', 'column2', 'column3', 'column4', 'column5']
 }
 
-class Main extends Component {
+class Board extends Component {
     state = initData
 
     onDragStart = () => {
@@ -41,7 +72,6 @@ class Main extends Component {
         // const opacity = destination
         //     ? destination.index / Object.keys(this.state.tasks).length
         //     : 0
-        
     }
 
     onDragEnd = result => {
@@ -115,45 +145,74 @@ class Main extends Component {
     }
 
     render() {
-        let { columnOrder, columns, tasks } = this.state
+        let { columnOrder, columns, tasks  } = this.state
+        let height = (this.props.windowSize.height - 115)
+        // let width = this.props.windowSize.width - 30
+
         return(
-            <div className="row">
-                <div className="mr-t-7"></div>
-                <DragDropContext
-                    onDragStart={this.onDragStart}
-                    onDragUpdate={this.onDragUpdate}
-                    onDragEnd={this.onDragEnd}
-                >
-                    <Droppable
-                        droppableId="all-column"
-                        direction="horizontal"
-                        type="column"
-                    >
-                        {(provided) => (
-                            <div
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                                className="full-width"
-                            >
-                                {
-                                    columnOrder.map((columnId, index) => {
-                                        const column = columns[columnId]
-                                        const _tasks = column.taskIds.map(taskId => tasks[taskId])
-                                        return (
-                                            <div key={column.id} className="col col-md-4 float-left">
-                                                <CardColumn column={column} tasks={_tasks} index={index} />
-                                            </div>
-                                        )
-                                    })
-                                }
-                                <div className="clearfix"></div>
+            <div>
+                <div className="row">
+                    <div className="col col-12">
+                        <div className="board-nav">
+                            <div className="left">
+                                <Button className="btn-no-border btn-eee btn-text-black"><strong>Kinh doanh sịp (Dự án: siêu sịp)</strong></Button>
+                                <Button className="btn-no-border btn-eee btn-text-black btn-star-active" icon="star-o" />
+                                <span className="space-span">|</span>
+                                <span className="list-user">
+                                    <Link to="/user-acount/uybv"><Avatar>U</Avatar></Link>
+                                    <Link to="/user-acount/uy"><Avatar>Y</Avatar></Link>
+                                    <Link to="/user-acount/uy2"><Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /></Link>
+                                    <Avatar className="pointer">200+</Avatar>
+                                    <Avatar className="pointer">+</Avatar>
+                                </span>
                             </div>
-                        )}
-                    </Droppable>
-                </DragDropContext>
+                            <div className="right text-right">
+                                <Button className="btn-no-border btn-eee btn-text-black"><strong>Gantt</strong></Button>
+                                <Button className="btn-no-border btn-eee btn-text-black"><strong>Mở rộng</strong></Button>
+                            </div>
+                            <div className="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="board-card" style={{ height: height + 'px' }}>
+                    <DragDropContext
+                        onDragStart={this.onDragStart}
+                        onDragUpdate={this.onDragUpdate}
+                        onDragEnd={this.onDragEnd}
+                        className="flex"
+                    >
+                        <Droppable
+                            droppableId="all-column"
+                            direction="horizontal"
+                            type="column"
+                        >
+                            {(provided) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    className="flex"
+                                >
+                                    {
+                                        columnOrder.map((columnId, index) => {
+                                            const column = columns[columnId]
+                                            const _tasks = column.taskIds.map(taskId => tasks[taskId])
+                                            return (
+                                                <div key={column.id} className="flex-card-horizontal">
+                                                    <CardColumn column={column} tasks={_tasks} index={index} />
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    <div className="clearfix"></div>
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
+                </div>
             </div>
         )
     }
 }
 
-export default Main
+export default connect(mapStateToProps, mapDispatchToProps)(Board)

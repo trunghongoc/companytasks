@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
+import { Link } from 'react-router-dom'
+import { Avatar } from 'antd'
 // import NullComponent from './../containers/NullComponent'
 
 class TaskColumn extends Component {
@@ -26,8 +28,19 @@ class TaskColumn extends Component {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                     >
-                        <div className={this.isDraggingClass(snapshot.isDragging)} >
-                            {task.content}
+                        <div>
+                            <div className={this.isDraggingClass(snapshot.isDragging)} >
+                                <div className="header"></div>
+                                <div className="body">{task.content}</div>
+                                <div className="footer">
+                                    {
+                                        task.users.map((user, index) => {
+                                            return <Link key={index} to={"/user-acount/" + user.userName}><Avatar>{ user.short }</Avatar></Link>
+                                        })
+                                    }
+                                </div>
+                            </div>
+                            <div className="h-5"></div>
                         </div>
                     </div>
                 )}

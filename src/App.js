@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 // BrowserRouter as Router, HashRouter, Switch, Link
 
 import Window from './watch/window'
@@ -24,6 +24,9 @@ class App extends Component {
           <div>
             <Navbar/>
             <div className="container-fluid">
+              <div className="row">
+                <div className="col col-12"><div className="mr-t-7"></div></div>
+              </div>
               <Switch>
                 <Route exact path="/" component={Main} />
                 <Route exact path="/user/cards" component={Board} />

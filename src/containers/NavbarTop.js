@@ -167,8 +167,12 @@ class NavbarTop extends Component {
                 <div className="wrap">
                     <div className="row">
                         <div className="col col-sm-9 col-md-5 align-self-start btn-left">
-                            <Button type="primary" icon="profile">Bảng</Button>
-                            <Button type="primary" shape="circle" icon="message" />
+                            <Link to="/user/cards">
+                                <Button type="primary" icon="profile">Bảng</Button>
+                            </Link>
+                            <Link to="/messages">
+                                <Button type="primary" shape="circle" icon="message" />
+                            </Link>
                         </div>
                         <div className="col col-md-2 text-center logo d-none d-md-block">
                             <Link to="/">

@@ -13,8 +13,10 @@
             }
         }
         .btn-left,
-        .btn-right {
-            button:not(:last-child) {
+        .btn-right,
+        a {
+            button:not(:last-child),
+            a:not(:last-child) {
                 margin-right: 5px;
             }
         }
@@ -31,13 +33,12 @@
     .fixed-menu-mobile {
         position: fixed;
         z-index: 999;
-        top: 0;
+        top: -50px;
         left: 0;
         width: 100%;
         padding: 0 15px;
         background: $base-color;
         text-align: center;
-        height: 0;
         transition: all 0.9s;
         .display-menu-mobile-t {
             display: none;
@@ -49,8 +50,8 @@
             margin-right: 6px;
         }
         &.active-mobile-t {
+            top: 0;
             padding: 9px 15px;
-            height: auto;
             .display-menu-mobile-t {
                 display: block;
             }
