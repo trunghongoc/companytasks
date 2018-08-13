@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
-import { Button, Avatar } from 'antd'
+import { Button, Avatar, Dropdown, Menu } from 'antd'
 import { connect } from 'react-redux'
+import * as Constants from './../constants/var'
 import CardColumn from './../containers/CardColumn'
 
 function mapStateToProps(state: Object): Object {
@@ -144,32 +145,90 @@ class Board extends Component {
         }
     }
 
+    isSm() {
+        return this.props.windowSize.width < Constants.mdScreenSize
+    }
+
+    menuNavLeft = () => {
+        return (
+            /*<Menu>
+                <Menu.Item key="0">
+                <a href="http://www.alipay.com/">1st menu item</a>
+                </Menu.Item>
+                <Menu.Item key="1">
+                <a href="http://www.taobao.com/">2nd menu item</a>
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="3">3rd menu item</Menu.Item>
+            </Menu>*/
+            <div className="menu-mobile-board-nav">
+                <p className="lead-t">List user</p>
+                <div className="list-user">
+                    <Link to="/user-acount/uybv"><Avatar>U</Avatar></Link>
+                    <Link to="/user-acount/uy"><Avatar>Y</Avatar></Link>
+                    <Link to="/user-acount/uy2"><Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /></Link>
+                    <Avatar className="pointer">200+</Avatar>
+                    <Avatar className="pointer">+</Avatar>
+                </div>
+            </div>
+        )
+    }
+
     render() {
         let { columnOrder, columns, tasks  } = this.state
         let height = (this.props.windowSize.height - 115)
         // let width = this.props.windowSize.width - 30
+        let isSm = this.isSm()
+        let smMenuClass = isSm ? "sm-menu-class" : "inline-block"
 
         return(
             <div>
                 <div className="row">
                     <div className="col col-12">
                         <div className="board-nav">
-                            <div className="left">
-                                <Button className="btn-no-border btn-eee btn-text-black"><strong>Kinh doanh sịp (Dự án: siêu sịp)</strong></Button>
-                                <Button className="btn-no-border btn-eee btn-text-black btn-star-active" icon="star-o" />
-                                <span className="space-span">|</span>
-                                <span className="list-user">
-                                    <Link to="/user-acount/uybv"><Avatar>U</Avatar></Link>
-                                    <Link to="/user-acount/uy"><Avatar>Y</Avatar></Link>
-                                    <Link to="/user-acount/uy2"><Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /></Link>
-                                    <Avatar className="pointer">200+</Avatar>
-                                    <Avatar className="pointer">+</Avatar>
-                                </span>
+                            <div className={"left " + (isSm ? "left-full-width" : "")}>
+                                <div className={smMenuClass}>
+                                    {
+                                        isSm &&
+                                        <Dropdown overlay={this.menuNavLeft()} trigger={['click']}>
+                                            <span className="left-menu">
+                                                <Button shape="circle" icon="appstore-o" />
+                                            </span>
+                                        </Dropdown>
+                                    }
+
+                                    <span className="center-menu">
+                                        <Button className="btn-no-border btn-eee btn-text-black"><strong>Dự án: siêu sịp</strong></Button>
+                                    </span>
+                                    <span className="right-menu">
+                                        <Button className="btn-no-border btn-eee btn-text-black btn-star-active" icon="star-o" />
+                                    </span>
+                                    {
+                                        isSm &&
+                                        <div className="clearfix "></div>
+                                    }
+                                </div>
+                                {
+                                    !isSm &&
+                                    <span>
+                                        <span className="space-span">|</span>
+                                        <span className="list-user">
+                                            <Link to="/user-acount/uybv"><Avatar>U</Avatar></Link>
+                                            <Link to="/user-acount/uy"><Avatar>Y</Avatar></Link>
+                                            <Link to="/user-acount/uy2"><Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /></Link>
+                                            <Avatar className="pointer">200+</Avatar>
+                                            <Avatar className="pointer">+</Avatar>
+                                        </span>
+                                    </span>
+                                }
                             </div>
-                            <div className="right text-right">
-                                <Button className="btn-no-border btn-eee btn-text-black"><strong>Gantt</strong></Button>
-                                <Button className="btn-no-border btn-eee btn-text-black"><strong>Mở rộng</strong></Button>
-                            </div>
+                            {
+                                !isSm &&
+                                <div className="right text-right">
+                                    <Button className="btn-no-border btn-eee btn-text-black"><strong>Gantt</strong></Button>
+                                    <Button className="btn-no-border btn-eee btn-text-black"><strong>Mở rộng</strong></Button>
+                                </div>
+                            }
                             <div className="clearfix"></div>
                         </div>
                     </div>
